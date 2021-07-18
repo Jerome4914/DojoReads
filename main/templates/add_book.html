@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Add a new Book</title>
+</head>
+
+<body style=background-color:rgb(13,17,23);>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <a href="/user/dashboard">Home</a>
+                <a href="/user/logout">Logout</a>
+                <h1>Add a new book Title and Review!</h1>
+                <form action="/book/create" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="title">Book title:</label>
+                        <input type="text" name="title" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="author_drpdown">Author:</label>
+                        <select name="author_dropdown" class="form-control">
+                            <option value="-1">Please choose an author</option>
+                            {% for author in authors %}
+                            <option value="{{author.id}}">{{author.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="author_name">Or add a new author</label>
+                        <input type="text" name="author_name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="content">Review:</label>
+                        <textarea name="content" cols="10" rows="4" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="rating">Rating:</label>
+                        <select name="rating" class="form-control">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <button class="btn btn-secondary">Create Book</button>
+                    </div>
+                    {% if messages %}
+                {% for message in messages %}
+                <p style="color:red;">{{message}}</p>
+                {% endfor %}
+                {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
